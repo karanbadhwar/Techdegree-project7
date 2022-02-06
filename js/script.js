@@ -18,3 +18,34 @@ jobRole.addEventListener('change', e => {
         otherJob.style.display = 'none';
     }
 });
+
+/* 
+    Step - 6, 
+        1- Selecting Color <select>, design <select> and color(options) color.children
+        2 - disable color section and then regains it once the Design <select> is selected with refined options
+*/
+const design = document.getElementById('design');
+const color = document.getElementById('color');
+const colorOptions = color.children;
+
+color.disabled = true;
+
+design.addEventListener('change', e => {
+    color.disabled = false;
+    for (let i = 0; i < colorOptions.length; i++){
+        const value = e.target.value;
+        const dataTheme = colorOptions[i].getAttribute('data-theme');
+        colorOptions[i].hidden = true;
+        if (value === dataTheme){
+            colorOptions[i].hidden = false;
+        }
+    }
+
+});
+
+// /* Step -6
+// */
+// const registerAct = document.getElementById('activities');
+// registerAct.addEventListener('change', e => {
+
+// }); 
