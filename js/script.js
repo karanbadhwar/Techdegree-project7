@@ -1,5 +1,11 @@
-// Step - 3 Focus on INPUT Name Field
 const inputName = document.getElementById('name');
+const email = document.getElementById('email');
+const registerAct = document.getElementById('activities');
+const ccNum = document.getElementById('cc-num');
+const ccZip = document.getElementById('zip');
+const ccCvv = document.getElementById('cvv');
+const form = document.querySelector('form');
+// Step - 3 Focus on INPUT Name Field
 inputName.focus();
 
 /*Step - 4 holding reference for <select> and Other Job roles into variable */
@@ -46,7 +52,7 @@ design.addEventListener('change', e => {
 /* 
 Step - 6 Adds and subtracts the total for the courses selected by the User
 */
-const registerAct = document.getElementById('activities');
+
 const total = registerAct.querySelector('#activities-cost');
 let price = 0;
 registerAct.addEventListener('change', e => {
@@ -93,4 +99,84 @@ payment.addEventListener('change', e => {
         paypal.style.display = 'none';
         bitcoin.style.display = 'none';
     }
+});
+
+/*
+    Step - 8
+*/
+/**
+ * nameValidator func, evaluates the user's name value with the regex
+ * @param {*} name - Takes the value and evaluates it 
+ * @returns nameIsValid - returns a Boolean Value 
+ */
+function nameValidator(name){
+    const nameIsValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]*?$/.test(name);
+    return nameIsValid;
+}
+
+/**
+ * emailValidator func, evaluates the user provided value with the regex value
+ * @param {*} email , user enetered value
+ * @returns 
+ */
+function emailValidator(email){
+    const emailIsValid = /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
+    return emailIsValid;
+}
+
+/**
+ * RegisterActValidator Function, is a validator, which evaluates all the checked or unchecked checkboxes from the Courses List, via,
+ * looping through the Activities-box list.
+ * @returns a Boolean Value True/False
+ */
+function registerActValidator(){
+    let totalCourses = 0;
+    const checkboxLabelList = document.querySelector('#activities-box').children;
+    for (let i = 0; i < checkboxLabelList.length; i++){
+        const checkbox = checkboxLabelList[i].firstElementChild;
+        if (checkbox.checked){
+            totalCourses += 1;
+        }
+    }
+    return (totalCourses > 0);
+}
+
+/**
+ * cardNumberValidator Function, performs a form validation on the credit card number
+ * @param {*} card, recieves the Card Number's Value and then evaluates the Number
+ * @returns a Boolean Value
+ */
+function cardNumberValidator(card){
+        const cardIsValid = /^\d{13,16}$/.test(card);
+        return cardIsValid;
+}
+
+/**
+ * zip func, evaluates the zip code provided by the user and returns a boolean value
+ * @param {*} cczip, user's provided value
+ * @returns, a boolean value
+ */
+function zip(cczip){
+    const zipIsValid = /^\d{5}$/.test(cczip);
+    return zipIsValid;
+}
+
+/**
+ * cvv func, evalutes the credit card's cvv number and returns a boolean value
+ * @param {*} cvvNum, user given CVV
+ * @returns , a boolean value
+ */
+function cvv(cvvNum){
+    const cvvIsValid = /^\d{3}$/.test(cvvNum);
+    return cvvIsValid;
+}
+
+form.addEventListener('submit', e => {
+    if (!nameValidator(inputName.value)) e.preventDefault(); 
+    if (!emailValidator(email.value)) e.preventDefault();
+    if (!registerActValidator()) e.preventDefault();
+    if (!cardNumberValidator(ccNum.value)) e.preventDefault();
+    if (!zip(ccZip.value)) e.preventDefault();
+    if (!cvv(ccCvv.value)) e.preventDefault();
+
 });
