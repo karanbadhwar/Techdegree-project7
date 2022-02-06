@@ -43,9 +43,54 @@ design.addEventListener('change', e => {
 
 });
 
-// /* Step -6
-// */
-// const registerAct = document.getElementById('activities');
-// registerAct.addEventListener('change', e => {
+/* 
+Step - 6 Adds and subtracts the total for the courses selected by the User
+*/
+const registerAct = document.getElementById('activities');
+const total = registerAct.querySelector('#activities-cost');
+let price = 0;
+registerAct.addEventListener('change', e => {
+    // console.log(e.target);
+    const cost = parseInt(e.target.getAttribute('data-cost'));
+    // console.log(cost);
+    if (e.target.checked){
+        price += cost;
+        total.textContent = `Total: $${price}`;
+    } else {
+        price -= cost;
+        total.textContent = `Total: $${price}`;
+    }
+}); 
 
-// }); 
+/*
+    Step - 7
+*/
+const payment = document.querySelector('#payment');
+const paymentOptions = payment.children;
+paymentOptions[1].selected = true;
+
+const creditCard = document.querySelector('.credit-card');
+const paypal = document.getElementById('paypal');
+const bitcoin = document.getElementById('bitcoin');
+
+paypal.style.display = 'none';
+bitcoin.style.display = 'none';
+
+payment.addEventListener('change', e => {
+    const paymentMethod = e.target.value;
+    // console.log(paymentMethod);
+    if (paymentMethod === 'paypal'){
+        paypal.style.display = 'block';
+        bitcoin.style.display = 'none';
+        creditCard.style.display = 'none';
+
+    } else if (paymentMethod === 'bitcoin'){
+        bitcoin.style.display = 'block';
+        paypal.style.display = 'none';
+        creditCard.style.display = 'none';
+    } else {
+        creditCard.style.display = 'block';
+        paypal.style.display = 'none';
+        bitcoin.style.display = 'none';
+    }
+});
