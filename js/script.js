@@ -172,11 +172,63 @@ function cvv(cvvNum){
 }
 
 form.addEventListener('submit', e => {
-    if (!nameValidator(inputName.value)) e.preventDefault(); 
-    if (!emailValidator(email.value)) e.preventDefault();
-    if (!registerActValidator()) e.preventDefault();
-    if (!cardNumberValidator(ccNum.value)) e.preventDefault();
-    if (!zip(ccZip.value)) e.preventDefault();
-    if (!cvv(ccCvv.value)) e.preventDefault();
+    if (!nameValidator(inputName.value)){ 
+       e.preventDefault(); 
+       inputName.parentNode.classList.add('not-valid');
+       inputName.parentElement.lastElementChild.style.display='block';
+    } else {
+        inputName.parentNode.classList.remove('not-valid');
+        inputName.parentNode.classList.add('valid');
+        inputName.parentElement.lastElementChild.style.display='none';
+    }
+    if (!emailValidator(email.value)){ 
+        e.preventDefault()
+        email.parentElement.className = 'not-valid';
+        email.parentElement.lastElementChild.style.display = 'block';
+    }else {
+        email.parentElement.className = 'valid';
+        email.parentElement.lastElementChild.style.display = 'none';
+    }
+    if (!registerActValidator()) {
+        e.preventDefault();
+        registerAct.lastElementChild.style.display ='block';
+    } else {
+        registerAct.lastElementChild.style.display ='none';
+    }
+    if (!cardNumberValidator(ccNum.value)){
+         e.preventDefault();
+         ccNum.parentNode.className = 'not-valid';
+         ccNum.parentNode.lastElementChild.style.display = 'block';
+    }else {
+        ccNum.parentNode.className = 'valid';
+        ccNum.parentNode.lastElementChild.style.display = 'none';
+    }
+    if (!zip(ccZip.value)) {
+        e.preventDefault();
+        ccZip.parentNode.className = 'not-valid';
+        ccZip.parentElement.lastElementChild.style.display = 'block';
+    } else {
+        ccZip.parentNode.className = 'valid';
+        ccZip.parentElement.lastElementChild.style.display = 'none';
+    }
+    if (!cvv(ccCvv.value)) {
+        e.preventDefault();
+        ccCvv.parentNode.className = 'not-valid';
+        ccCvv.parentNode.lastElementChild.style.display = 'block';
+    }else {
+        ccCvv.parentNode.className = 'valid';
+        ccCvv.parentNode.lastElementChild.style.display = 'none';
+    }
 
 });
+const checkboxInput = document.querySelectorAll("#activities input");
+// console.log(checkboxInput)
+for (let i = 0; i < checkboxInput.length; i++){
+    console.log(checkboxInput[i]);
+    checkboxInput[i].addEventListener('focus', e => {
+        checkboxInput[i].parentElement.classList.add('focus');
+    });
+    checkboxInput[i].addEventListener('blur', e => {
+        checkboxInput[i].parentElement.classList.remove('focus');
+    })
+}
