@@ -254,19 +254,34 @@ registerAct.addEventListener('change', e => {
 
 const basicInfo = document.querySelector('.basic-info');
 basicInfo.addEventListener('keyup', e => {
-    if (!nameValidator(inputName.value)){ 
-        e.preventDefault(); 
-        const lastChild = inputName.parentNode.lastElementChild;
-        lastChild.textContent = 'Name field can only have letters and no special character or numbers allowed';
-        if (inputName.value === ''){
-            lastChild.textContent = 'Name field cannot be empty';
+    if (e.target.type === 'text'){
+        if (!nameValidator(inputName.value)){ 
+            const lastChild = inputName.parentNode.lastElementChild;
+            lastChild.textContent = 'Name field can only have letters and no special character or numbers allowed';
+            if (inputName.value === ''){
+                lastChild.textContent = 'Name field cannot be empty';
+            }
+            inputName.parentNode.classList.add('not-valid');
+            inputName.parentElement.lastElementChild.style.display='block';
+        } else {
+            inputName.parentNode.classList.remove('not-valid');
+            inputName.parentNode.classList.add('valid');
+            inputName.parentElement.lastElementChild.style.display='none';
+              }      
+    }     
+    if (e.target.type === 'email'){
+        if (!emailValidator(email.value)){ 
+            const lastChild = email.parentNode.lastElementChild;
+            if (email.value === ''){
+                lastChild.textContent = 'Email field cannot be empty';
+            }else {
+                lastChild.textContent = 'Email must be in the format "abcd@domainName.com"'
+            }
+            email.parentElement.className = 'not-valid';
+            email.parentElement.lastElementChild.style.display = 'block';
+        }else {
+            email.parentElement.className = 'valid';
+            email.parentElement.lastElementChild.style.display = 'none';
         }
-        inputName.parentNode.classList.add('not-valid');
-        inputName.parentElement.lastElementChild.style.display='block';
-     } else {
-         inputName.parentNode.classList.remove('not-valid');
-         inputName.parentNode.classList.add('valid');
-         inputName.parentElement.lastElementChild.style.display='none';
-}
-
+    }
 });
