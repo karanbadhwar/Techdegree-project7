@@ -224,7 +224,7 @@ form.addEventListener('submit', e => {
 const checkboxInput = document.querySelectorAll("#activities input");
 // console.log(checkboxInput)
 for (let i = 0; i < checkboxInput.length; i++){
-    console.log(checkboxInput[i]);
+    // console.log(checkboxInput[i]);
     checkboxInput[i].addEventListener('focus', e => {
         checkboxInput[i].parentElement.classList.add('focus');
     });
@@ -232,3 +232,39 @@ for (let i = 0; i < checkboxInput.length; i++){
         checkboxInput[i].parentElement.classList.remove('focus');
     })
 }
+
+registerAct.addEventListener('change', e => {
+        const dayTime = e.target.getAttribute('data-day-and-time');
+     for (let i = 0; i < checkboxInput.length; i++){
+        if (e.target.checked){
+                const otherDayTimes = checkboxInput[i].getAttribute('data-day-and-time');
+                if (dayTime === otherDayTimes){
+                    if (e.target.name !== checkboxInput[i].name){
+                        checkboxInput[i].disabled = true;
+                    }
+                
+                }
+            } else {
+                checkboxInput[i].disabled = false;
+            }
+        }
+});
+
+const basicInfo = document.querySelector('.basic-info');
+basicInfo.addEventListener('keyup', e => {
+    if (!nameValidator(inputName.value)){ 
+        e.preventDefault(); 
+        const error = document.createElement('span');
+        const text = document.createTextNode('Name field can only have letters and no special character or numbers allowed');
+        error.appendChild(text);
+        inputName.parentNode.classList.add('not-valid');
+        inputName.parentNode.appendChild(error);
+        error.className ='hint';
+        inputName.parentElement.lastElementChild.style.display='block';
+     } else {
+         inputName.parentNode.classList.remove('not-valid');
+         inputName.parentNode.classList.add('valid');
+         inputName.parentElement.lastElementChild.style.display='none';
+}
+
+});
