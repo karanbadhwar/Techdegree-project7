@@ -174,6 +174,8 @@ function cvv(cvvNum){
 form.addEventListener('submit', e => {
     if (!nameValidator(inputName.value)){ 
        e.preventDefault(); 
+       const lastChild = inputName.parentNode.lastElementChild;
+       lastChild.textContent = 'Name field cannot be empty';
        inputName.parentNode.classList.add('not-valid');
        inputName.parentElement.lastElementChild.style.display='block';
     } else {
@@ -254,12 +256,12 @@ const basicInfo = document.querySelector('.basic-info');
 basicInfo.addEventListener('keyup', e => {
     if (!nameValidator(inputName.value)){ 
         e.preventDefault(); 
-        const error = document.createElement('span');
-        const text = document.createTextNode('Name field can only have letters and no special character or numbers allowed');
-        error.appendChild(text);
+        const lastChild = inputName.parentNode.lastElementChild;
+        lastChild.textContent = 'Name field can only have letters and no special character or numbers allowed';
+        if (inputName.value === ''){
+            lastChild.textContent = 'Name field cannot be empty';
+        }
         inputName.parentNode.classList.add('not-valid');
-        inputName.parentNode.appendChild(error);
-        error.className ='hint';
         inputName.parentElement.lastElementChild.style.display='block';
      } else {
          inputName.parentNode.classList.remove('not-valid');
