@@ -195,10 +195,12 @@ form.addEventListener('submit', e => {
     }
     if (!registerActValidator()) {
         e.preventDefault();
-        registerAct.parentNode.className = 'not-valid';
+        registerAct.classList.add('not-valid') ;
         registerAct.lastElementChild.style.display ='block';
     } else {
-        registerAct.parentNode.className = 'valid';
+
+        registerAct.classList.remove('not-valid');
+        registerAct.classList.add('valid');
         registerAct.lastElementChild.style.display ='none';
     }
     if (payment.value === 'credit-card'){
