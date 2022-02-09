@@ -42,7 +42,9 @@ design.addEventListener('change', e => {
         const value = e.target.value;
         const dataTheme = colorOptions[i].getAttribute('data-theme');
         colorOptions[i].hidden = true;
+        colorOptions[0].textContent = 'Choose your color for design';
         if (value === dataTheme){
+            colorOptions[0].selected = true;
             colorOptions[i].hidden = false;
         }
     }
@@ -193,35 +195,38 @@ form.addEventListener('submit', e => {
     }
     if (!registerActValidator()) {
         e.preventDefault();
+        registerAct.parentNode.className = 'not-valid';
         registerAct.lastElementChild.style.display ='block';
     } else {
+        registerAct.parentNode.className = 'valid';
         registerAct.lastElementChild.style.display ='none';
     }
-    if (!cardNumberValidator(ccNum.value)){
-         e.preventDefault();
-         ccNum.parentNode.className = 'not-valid';
-         ccNum.parentNode.lastElementChild.style.display = 'block';
-    }else {
-        ccNum.parentNode.className = 'valid';
-        ccNum.parentNode.lastElementChild.style.display = 'none';
+    if (payment.value === 'credit-card'){
+        if (!cardNumberValidator(ccNum.value)){
+            e.preventDefault();
+            ccNum.parentNode.className = 'not-valid';
+            ccNum.parentNode.lastElementChild.style.display = 'block';
+        }else {
+            ccNum.parentNode.className = 'valid';
+            ccNum.parentNode.lastElementChild.style.display = 'none';
+        }
+        if (!zip(ccZip.value)) {
+            e.preventDefault();
+            ccZip.parentNode.className = 'not-valid';
+            ccZip.parentElement.lastElementChild.style.display = 'block';
+        } else {
+            ccZip.parentNode.className = 'valid';
+            ccZip.parentElement.lastElementChild.style.display = 'none';
+        }
+        if (!cvv(ccCvv.value)) {
+            e.preventDefault();
+            ccCvv.parentNode.className = 'not-valid';
+            ccCvv.parentNode.lastElementChild.style.display = 'block';
+        }else {
+            ccCvv.parentNode.className = 'valid';
+            ccCvv.parentNode.lastElementChild.style.display = 'none';
+        }
     }
-    if (!zip(ccZip.value)) {
-        e.preventDefault();
-        ccZip.parentNode.className = 'not-valid';
-        ccZip.parentElement.lastElementChild.style.display = 'block';
-    } else {
-        ccZip.parentNode.className = 'valid';
-        ccZip.parentElement.lastElementChild.style.display = 'none';
-    }
-    if (!cvv(ccCvv.value)) {
-        e.preventDefault();
-        ccCvv.parentNode.className = 'not-valid';
-        ccCvv.parentNode.lastElementChild.style.display = 'block';
-    }else {
-        ccCvv.parentNode.className = 'valid';
-        ccCvv.parentNode.lastElementChild.style.display = 'none';
-    }
-
 });
 const checkboxInput = document.querySelectorAll("#activities input");
 // console.log(checkboxInput)
